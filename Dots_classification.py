@@ -41,3 +41,35 @@ def update_plot(hidden_layer_size):
 
     #Predict class labels for the original data points
     y_pred = clf.predict(X)
+
+    # Clear previous plot
+    plt.clf()
+
+    # Plot the decision boundary
+    # it is oftern used to visualise the decision boundary of a model by plotting
+    # the predicted class probabilities or labels across a grid of points
+    plt.contourf(X_plane, Y_plane,Z, level=[-0.5,0.5.1.5], cmap=plt.cm.RdYlGn, alpha=0.6)
+
+    # plot the original data points with their predicted labels
+    # Seperate points for eadch predicted class
+    class_0=y_pred==0 # Indices of points predicted as class 0
+    class_1=y_pred==1 # Indices of points predicted as class 1
+
+    plt.scatter(X[class_0,0], X[class_0,1], c='red', edgecolors='k', marker='o',s=50,label='Predicted Class 0')
+    plt.scatter(X[class_1,1],X[class_1,1], c='green',edgecolors='k', marker='o',s=50,label='Predicted Class 1')
+
+    #Add labels and title
+    plt.xlabel('Feature 1')
+    plt.ylabel('Feature 2')
+    plt.title('Decision Bounadry and Predicted labels(Hidden Layer Size={hidden_layer_size})')
+    plt.legend()
+    plt.show()
+
+    # Create a slider fopr hidden layer size
+    hidden_layer_size_slider=widgets.IntSlider(value=1,min=1,max=10,step=1,description='Hidden Layer Size')
+
+    # Create an interactive widget
+    interactive_plot=interactive(update_plot, hidden_layer_size=hidden_layer_size_slider)
+
+    # Display the widgets
+    display(interactive_plot)
